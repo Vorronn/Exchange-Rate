@@ -1,0 +1,124 @@
+<aura:component implements="force:appHostable" controller="ExchangeRateController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!--Атрибуты для Selecta-->
+    <aura:attribute name="selectedValue" type="String" access="PRIVATE"/>
+    <aura:attribute name="currencies" type="String[]" default="GBP"/>
+    <!--Атрибуты для Selecta-->
+
+    <!--Атрибуты установки даты -->
+    <aura:attribute name="currentDate" type="Date"/>
+    <aura:attribute name="minDate" type="Date"/>
+    <aura:attribute name="maxDate" type="Date"/>
+    <aura:attribute name="startDate" type="Date"/>
+    <aura:attribute name="endDate" type="Date"/>
+    <aura:attribute name="rateDate" type="Date"/>
+    <!--Атрибуты установки даты -->
+
+    <!--Атрибуты для создания таблицы курсов валют-->
+    <aura:attribute name="exchangeRate" type="Object[]" default="{}"/>
+    <aura:attribute name="columns" type="List"/>
+    <!--Атрибуты для создания таблицы курсов валют-->
+
+    <!--Атрибут для получения сообщение строки отображения даты-->
+    <aura:attribute name="displayDate" type="String"/>
+    <!--Атрибут для получения сообщение строки отображения даты-->
+
+    <!--Вспомогательные атрибуты-->
+    <aura:attribute name="startRate" type="Object[]" default="{}"/>
+    <aura:attribute name="endRate" type="Object[]" default="{}"/>
+    <!--Вспомогательные атрибуты-->
+    
+    <!--Тело компонента-->
+    <div class="slds-card slds-container--small body-app">
+        <div class="name-application">
+            <h1>Exchange Rate</h1>
+        </div>
+        <!--Header menu-->
+    	<div class="header-menu">
+            <div class="select-date">
+
+                <div class="slds-grid">
+                    <!--Выбор основной валюты-->
+                    <div class="slds-col slds-size_2-of-5">
+                        <lightning:select name="select" label="Select a Currncy" aura:id="mySelect" value="{!v.selectedValue}" required="true">
+                            <aura:iteration items="{!v.currencies}" var="currency">
+                                    <option text="{!currency}"></option>
+                                </aura:iteration>
+                        </lightning:select>
+                    </div>
+                    <!--Выбор основной валюты-->
+                    
+                    <!--Ввод интересующей даты от минимальной даты до максимальной-->
+                    <div class="slds-col slds-size_2-of-5">
+                        <lightning:input type="date" name="input" label="Select date" value="{!v.currentDate}" min="{!v.minDate}" max="{!v.maxDate}"/>
+                    </div>
+                    <!--Ввод интересующей даты от минимальной даты до максимальной-->
+                    
+                    <!--Кнопка для получения нужных курсов валют на выбранную дату-->
+                    <div class="slds-col slds-size_1-of-5 panel-botton">
+                        <div class="box-button">
+                            <lightning:button variant="brand-outline" label="- Show -" title="Brand action" onclick="{!c.getExchangeRate}"/>
+                        </div>
+                    </div>
+                    <!--Кнопка для получения нужных курсов валют на выбранную дату-->
+
+                </div>
+            </div>
+            
+            <div class="select-period">
+                <div class="slds-grid">
+
+                    <!--Ввод периуда даты с минимального до максимального-->
+                    <div class="slds-col slds-size_2-of-5">
+                        <lightning:input type="date" name="input" label="Date min values" value="{!v.startDate}" min="{!v.minDate}" max="{!v.maxDate}"/>
+                    </div>
+                    <div class="slds-col slds-size_2-of-5">
+                        <lightning:input type="date" name="input" label="Date max values" value="{!v.endDate}" min="{!v.minDate}" max="{!v.maxDate}"/>
+                    </div>
+                    <!--Ввод периуда даты с минимального до максимального-->
+
+                    <!--Кнопка для получения нужных курсов валют на выбранный период-->
+                    <div class="slds-col slds-size_1-of-5">
+                        <div class="box-button">
+                            <lightning:button variant="brand-outline" label="- Show -" title="Brand action" onclick="{!c.getPeriod}"/>
+                        </div>
+                    </div>
+                    <!--Кнопка для получения нужных курсов валют на выбранный период-->
+
+                </div>
+            </div>
+        </div>
+		<!--Header menu-->
+         
+        <!--Main menu-->
+        <div class="main-menu">
+            
+            <!--Отображения даты выбранных курсов валют-->
+            <div class="current-date">
+                <p>{!v.displayDate}</p>
+            </div>
+            <!--Отображения даты выбранных курсов валют-->
+            
+            <!--Таблица для отображения данных-->
+            <div>
+                <lightning:datatable    keyField="Id"
+                                        data="{!v.exchangeRate}"
+                                        columns="{!v.columns}"
+                                        hideCheckboxColumn="true"/>
+            </div>
+            <!--Таблица для отображения данных-->
+
+        </div>  
+        <!--Main menu-->
+
+        <!--Footer menu-->
+        <div class="footer-menu">
+            <p class="info">Data obtained from https://exchangeratesapi.io</p>
+        </div>
+        <!--Footer menu-->
+  
+    </div>
+	
+</aura:component>

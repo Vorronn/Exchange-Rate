@@ -1,0 +1,44 @@
+.THIS {
+
+}
+
+.THIS .name-application{
+    text-align: center;
+    justify-content: center;
+}
+
+.THIS h1{
+	color: gray;
+    font-size: 1.0rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding:0.1rem;
+}
+
+.THIS .name-application{
+    background-color: rgb(93, 189, 181);
+
+}
+
+.THIS .header-menu {
+    border-top: solid 1px #0070d2;
+    background-color: rgb(93, 189, 181);
+
+}
+
+.THIS .box-button{
+    margin-top: 1.85em;
+    text-align: center;
+    justify-content: center;
+}
+
+.THIS .main-menu{
+    border-top: solid 1px #0070d2;
+    background-color: rgb(93, 189, 181);
+}
+
+.THIS .footer-menu{
+    border-top: solid 1px #0070d2;
+    background-color: rgb(93, 189, 181);
+}
+
