@@ -1,4 +1,4 @@
-<aura:component implements="force:appHostable" controller="ExchangeRateController">
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" controller="ExchangeRateController">
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
@@ -24,22 +24,24 @@
     <!--Атрибут для получения сообщение строки отображения даты-->
     <aura:attribute name="displayDate" type="String"/>
     <!--Атрибут для получения сообщение строки отображения даты-->
-
-    <!--Вспомогательные атрибуты-->
-    <aura:attribute name="startRate" type="Object[]" default="{}"/>
-    <aura:attribute name="endRate" type="Object[]" default="{}"/>
-    <!--Вспомогательные атрибуты-->
     
-    <!--Тело компонента-->
-    <div class="slds-card slds-container--small body-app">
-        <div class="name-application">
-            <h1>Exchange Rate</h1>
-        </div>
-        <!--Header menu-->
-    	<div class="header-menu">
-            <div class="select-date">
+    <!-- Атрибут сообщения -->
+    <aura:attribute name="message" type="String"/>
+	<!-- Атрибут сообщения -->
 
-                <div class="slds-grid">
+    <!--Тело компонента-->
+    <div class="slds-box slds-box_small slds-theme_shade">
+        <div class="slds-page-header">
+            <h1 class="slds-text-heading--label">Exchange Rate</h1>
+        </div>
+        
+        <div class="slds-theme_error">{!v.message}</div>
+        
+        <!--Header menu-->
+    	<div class="slds-m-top_x-small">
+            <div class="slds-m-top_xx-small">
+
+                <div class="slds-grid slds-grid_vertical-align-end">
                     <!--Выбор основной валюты-->
                     <div class="slds-col slds-size_2-of-5">
                         <lightning:select name="select" label="Select a Currncy" aura:id="mySelect" value="{!v.selectedValue}" required="true">
@@ -58,8 +60,8 @@
                     
                     <!--Кнопка для получения нужных курсов валют на выбранную дату-->
                     <div class="slds-col slds-size_1-of-5 panel-botton">
-                        <div class="box-button">
-                            <lightning:button variant="brand-outline" label="- Show -" title="Brand action" onclick="{!c.getExchangeRate}"/>
+                        <div class="slds-align_absolute-center">
+                            <lightning:button variant="brand-outline" label="-Show-" title="Brand action" onclick="{!c.getExchangeRate}"/>
                         </div>
                     </div>
                     <!--Кнопка для получения нужных курсов валют на выбранную дату-->
@@ -67,8 +69,8 @@
                 </div>
             </div>
             
-            <div class="select-period">
-                <div class="slds-grid">
+            <div class="slds-m-top_xx-small">
+                <div class="slds-grid slds-grid_vertical-align-end">
 
                     <!--Ввод периуда даты с минимального до максимального-->
                     <div class="slds-col slds-size_2-of-5">
@@ -81,8 +83,8 @@
 
                     <!--Кнопка для получения нужных курсов валют на выбранный период-->
                     <div class="slds-col slds-size_1-of-5">
-                        <div class="box-button">
-                            <lightning:button variant="brand-outline" label="- Show -" title="Brand action" onclick="{!c.getPeriod}"/>
+                        <div class="slds-align_absolute-center">
+                            <lightning:button variant="brand-outline" label="-Show-" title="Brand action" onclick="{!c.getPeriod}" />
                         </div>
                     </div>
                     <!--Кнопка для получения нужных курсов валют на выбранный период-->
@@ -93,16 +95,16 @@
 		<!--Header menu-->
          
         <!--Main menu-->
-        <div class="main-menu">
+        <div class="slds-m-top_xx-small">
             
             <!--Отображения даты выбранных курсов валют-->
-            <div class="current-date">
+            <div class="slds-m-top_x-small">
                 <p>{!v.displayDate}</p>
             </div>
             <!--Отображения даты выбранных курсов валют-->
             
             <!--Таблица для отображения данных-->
-            <div>
+            <div class="slds-box slds-box_xx-small slds-m-top_x-small slds-scrollable--y" style="max-height: 300px">
                 <lightning:datatable    keyField="Id"
                                         data="{!v.exchangeRate}"
                                         columns="{!v.columns}"
@@ -114,8 +116,8 @@
         <!--Main menu-->
 
         <!--Footer menu-->
-        <div class="footer-menu">
-            <p class="info">Data obtained from https://exchangeratesapi.io</p>
+        <div class="slds-m-top_x-small">
+            <p>Data obtained from https://exchangeratesapi.io</p>
         </div>
         <!--Footer menu-->
   

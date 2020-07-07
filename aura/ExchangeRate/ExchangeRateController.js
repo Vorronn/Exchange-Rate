@@ -2,12 +2,9 @@
     doInit : function (cmp, event, helper) {
         //Установка полей таблицы
         cmp.set('v.columns', [
-            {label: 'Base currency', fieldName: 'baseCurrency', type: 'text'},
-            {label: 'Target currency', fieldName: 'targetCurrency', type: 'text'},
-            {label: 'Rates', fieldName: 'rates', type: 'text'},
-
+            {label: 'Currency', fieldName: 'targetCurrency', type: 'text'},
+            {label: 'Rates', fieldName: 'rates', type: 'number', cellAttributes: { alignment: 'left' }},
         ]);
-
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //Получение последней возможной даты и установка минимального и максимального значения даты
         //Получение текущей даты в формате yyyy-mm-dd
@@ -24,8 +21,22 @@
         cmp.set('v.minDate', '1999-01-04');
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-        //Вызов для получения курсов валют на последнюю возможную дату
-        helper.getRates(cmp, event, helper);
+        //Получаем значение пиклиста
+        let action = cmp.get("c.getPicklistValue");
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            if(state === 'SUCCESS'){
+                let result = response.getReturnValue();
+                cmp.set('v.currencies', result.wrapPickList);   
+
+                //Вызов для получения курсов валют на последнюю возможную дату
+                helper.getRates(cmp, event, helper);
+            }
+            else {
+                cmp.set("v.message",'Error:'+' There is no data in the database and the API service is not available! try to get the data a little later!');
+            }
+        });
+        $A.enqueueAction(action);
     },
 
     //При нажатии кнопки вызываем helper и получаем курсы валют на интересующую нас дату и базовую валюту

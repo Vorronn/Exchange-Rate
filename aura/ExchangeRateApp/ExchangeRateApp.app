@@ -1,3 +1,3 @@
-<aura:application extends="force:slds">
+<aura:application implements="flexipage:availableForAllPageTypes" extends="force:slds" >
     <c:ExchangeRate/>
 </aura:application>

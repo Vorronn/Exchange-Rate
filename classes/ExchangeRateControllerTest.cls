@@ -14,7 +14,7 @@ public class ExchangeRateControllerTest {
     @isTest
     public static void test1(){
         Test.startTest();
-        WrapperRates.WrapperRatesTable tableWrapper = ExchangeRateController.getWrapperTable('2020-04-04');
+        WrapperRates.WrapperRatesTable tableWrapper = ExchangeRateController.getWrapperTable('2020-04-04', 'USD');
         System.assert(tableWrapper!=null);
         Test.stopTest();
     }
@@ -23,7 +23,26 @@ public class ExchangeRateControllerTest {
     public static void test2(){
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new ExchangeRateControllerMock());
-        WrapperRates.WrapperRatesTable tableWrapper = ExchangeRateController.getWrapperTable('2020-06-04');
+        WrapperRates.WrapperRatesTable tableWrapper = ExchangeRateController.getWrapperTable('2020-06-04', 'USD');
+        System.assert(tableWrapper!=null);
+        Test.stopTest();
+    }
+    
+    
+	@isTest
+    public static void test3(){
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new ExchangeRateControllerAllMock());
+        WrapperRates.WrapperRatesTable tableWrapper = ExchangeRateController.getWrapperTablePeriod('USD', '2020-01-06', '2020-01-16');
+        System.assert(tableWrapper!=null);
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void test4(){
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new ExchangeRateControllerAllMock());
+        WrapperRates.WrapperRatesTable tableWrapper = ExchangeRateController.getPicklistValue();
         System.assert(tableWrapper!=null);
         Test.stopTest();
     }
